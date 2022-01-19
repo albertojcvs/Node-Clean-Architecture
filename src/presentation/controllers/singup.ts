@@ -12,7 +12,9 @@ export class SingUpController implements Controller {
         if (!httpRequest.body[field]) return badRequest(new MissingParamError(field))
       }
 
-      if (httpRequest.body.password !== httpRequest.body.passwordConfimation) return badRequest(new InvalidParamError('passwordConfimation'))
+      const { name, email, password, passwordConfimation } = httpRequest.body
+
+      if (password !== passwordConfimation) return badRequest(new InvalidParamError('passwordConfimation'))
 
       const isValid = this.emailValidator.isValid(httpRequest.body.email)
 
