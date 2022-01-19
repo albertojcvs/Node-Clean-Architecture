@@ -83,6 +83,21 @@ describe('Sing up controller', () => {
     expect(httpResponse.body).toEqual(new MissingParamError('passwordConfirmation'))
   })
 
+  test('should return 400 if no password and pasword confimation are not equal', () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        name: 'fake',
+        email: 'fake@fake.com',
+        password: 'passowod',
+        passwordConfirmation: 'any'
+      }
+    }
+
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new InvalidParamError('passwordConfirmation'))
+  })
   test('should return 400 if no pasword confimation is provided', () => {
     const { sut, emailValidatorStub } = makeSut()
 
