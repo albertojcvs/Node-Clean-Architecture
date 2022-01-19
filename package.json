@@ -22,7 +22,8 @@
   },
   "author": "Alberto Jose <albertojcvs@gmail.com>",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:staged":"jest"
   },
   "dependencies": {
     "eslint-config-standard-with-typescript": "^21.0.1"
