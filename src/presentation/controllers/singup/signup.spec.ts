@@ -169,6 +169,24 @@ describe('Sing up controller', () => {
     expect(httpResponse.body).toEqual(new ServerError())
   })
 
+  test('should return 500 if AddAccount thows a error', () => {
+    const { sut, addAccountStub } = makeSut()
+    jest.spyOn(addAccountStub, 'add').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const httpRequest = {
+      body: {
+        name: 'fake',
+        email: 'fake@fake.com',
+        password: 'password',
+        passwordConfirmation: 'password'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
+  })
+
   test('should call AddAccount with correct values', () => {
     const { sut, addAccountStub } = makeSut()
     const addSpy = jest.spyOn(addAccountStub, 'add')
