@@ -1,7 +1,6 @@
-import { AddAccount } from '../../domain/usesCases/add-account'
-import { MissingParamError, InvalidParamError } from '../errors'
-import { badRequest, serverError } from '../helpers/http-helper'
-import { Controller, HttpRequest, EmailValidator, HttpResponse } from '../protocols'
+import { AddAccount, Controller, HttpRequest, EmailValidator, HttpResponse } from './singup-protocols'
+import { MissingParamError, InvalidParamError } from '../../errors'
+import { badRequest, serverError } from '../../helpers/http-helper'
 
 export class SingUpController implements Controller {
   constructor (private readonly emailValidator: EmailValidator, private readonly addAccount: AddAccount) {}
