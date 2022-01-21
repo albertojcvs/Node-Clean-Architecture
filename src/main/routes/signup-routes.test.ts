@@ -3,7 +3,7 @@ import { MongoHelper } from '../../infra/db/mongofb/helpers/mongo-helper'
 import { app } from '../config/app'
 describe('Singup routes', () => {
   beforeAll(async () => {
-    await MongoHelper.connect()
+    await MongoHelper.connect(process.env.MONGO_URL)
   })
 
   afterAll(async () => {
