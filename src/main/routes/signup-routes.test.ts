@@ -19,7 +19,7 @@ describe('Singup routes', () => {
       name: 'Alberto',
       email: 'albertojcvs@gmail.com',
       password: '1234',
-      passowordConfirmation: '1234'
+      passwordConfirmation: '1234'
     }).expect(200)
   })
 })
