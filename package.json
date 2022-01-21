@@ -31,7 +31,7 @@
   },
   "author": "Alberto Jose <albertojcvs@gmail.com>",
   "scripts": {
-    "start": "sucrase-node ./src/main/ server.ts",
+    "start": "sucrase-node ./src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --pasWithNoTests --runInBand",
     "test:unit": "yarn test -- -c jest-unit-config.js",
