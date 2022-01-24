@@ -33,7 +33,7 @@
   "scripts": {
     "start": "sucrase-node ./src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
-    "test:verbose": "jest --pasWithNoTests --runInBand",
+    "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "yarn test -- -c jest-unit-config.js",
     "test:integration": "yarn test -- -c jest-integration-config.js",
     "test:staged": "yarn test -- --findRelatedTests",
