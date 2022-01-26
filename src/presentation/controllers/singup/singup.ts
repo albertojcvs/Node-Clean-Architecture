@@ -1,9 +1,9 @@
-import { AddAccount, Controller, HttpRequest, EmailValidator, HttpResponse } from './singup-protocols'
+import { AddAccount, Controller, HttpRequest, EmailValidator, HttpResponse, Validation } from './singup-protocols'
 import { MissingParamError, InvalidParamError } from '../../errors'
 import { badRequest, ok, serverError } from '../../helpers/http-helper'
 
 export class SingUpController implements Controller {
-  constructor (private readonly emailValidator: EmailValidator, private readonly addAccount: AddAccount) {}
+  constructor (private readonly emailValidator: EmailValidator, private readonly addAccount: AddAccount, private readonly validation: Validation) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
