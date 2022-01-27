@@ -4,7 +4,7 @@ import request from 'supertest'
 import { MongoHelper } from '../../infra/db/mongofb/helpers/mongo-helper'
 import { app } from '../config/app'
 describe('Login routes', () => {
-  let accountCollection: Collection
+  let accountsCollection: Collection
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
   })
@@ -14,8 +14,8 @@ describe('Login routes', () => {
   })
 
   beforeEach(async () => {
-    accountCollection = await MongoHelper.getCollection('account')
-    await accountCollection.deleteMany({})
+    accountsCollection = await MongoHelper.getCollection('accounts')
+    await accountsCollection.deleteMany({})
   })
   describe('POST /signup', () => {
     test('Should return 200 on signup', async () => {
@@ -30,8 +30,8 @@ describe('Login routes', () => {
 
   describe('POST /login', () => {
     test('Should retun 200 on login', async () => {
-      const password = await hash('123', 12)
-      await accountCollection.insertOne({
+      const password = await hash('1234', 12)
+      await accountsCollection.insertOne({
         name: 'Alberto',
         email: 'albertojcvs@gmail.com',
         password
@@ -40,6 +40,13 @@ describe('Login routes', () => {
         email: 'albertojcvs@gmail.com',
         password: '1234'
       }).expect(200)
+    })
+
+    test('Should retun 401 on login on fails', async () => {
+      await request(app).post('/api/login').send({
+        email: 'albertojcvs@gmail.com',
+        password: '1234'
+      }).expect(401)
     })
   })
 })
