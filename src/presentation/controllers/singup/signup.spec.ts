@@ -1,7 +1,7 @@
 import { AccountModel, AddAccount, AddAccountModel, EmailValidator, HttpRequest, HttpResponse, Validation } from './singup-protocols'
 import { InvalidParamError, MissingParamError, ServerError } from '../../errors'
 import { SingUpController } from './signup'
-import { badRequest, ok, serverError } from '../../helpers/http-helper'
+import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 
 interface SutTypes {
   sut: SingUpController
