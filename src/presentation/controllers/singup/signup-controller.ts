@@ -1,4 +1,4 @@
-import { AddAccount, Controller, HttpRequest, EmailValidator, HttpResponse, Validation } from './singup-protocols'
+import { AddAccount, Controller, HttpRequest, EmailValidator, HttpResponse, Validation } from './singup-controller-protocols'
 import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 
 export class SingUpController implements Controller {
