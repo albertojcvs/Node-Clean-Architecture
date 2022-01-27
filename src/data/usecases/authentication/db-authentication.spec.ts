@@ -42,7 +42,7 @@ const makeEncrypter = (): Encrypter => {
 
 const makeUpdateTokenRepository = (): UpdateTokenRepository => {
   class UpdateTokenRepositoryStub implements UpdateTokenRepository {
-    async update (token: string): Promise<void> {
+    async updateToken (token: string): Promise<void> {
       await new Promise(resolve => resolve(''))
     }
   }
@@ -138,8 +138,8 @@ describe('DbAuthentication UseCase', () => {
 
   test('Should call UpdateTokenReposrioty with correct  token', async () => {
     const { sut, updateTokenRepositoryStub } = makeSut()
-    const updateSpy = jest.spyOn(updateTokenRepositoryStub, 'update')
+    const updateTokenSpy = jest.spyOn(updateTokenRepositoryStub, 'updateToken')
     await sut.auth(makeFakeAtuthentication())
-    expect(updateSpy).toHaveBeenCalledWith('any_id', 'any_token')
+    expect(updateTokenSpy).toHaveBeenCalledWith('any_id', 'any_token')
   })
 })
