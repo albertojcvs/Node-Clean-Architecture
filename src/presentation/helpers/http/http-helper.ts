@@ -1,10 +1,16 @@
-import { response } from 'express'
 import { ServerError, UnauthorizedError } from '../../errors'
 import { HttpResponse } from '../../protocols/http'
 
 export const badRequest = (error: Error): HttpResponse => {
   return {
     statusCode: 400,
+    body: error
+  }
+}
+
+export const forbiden = (error: Error): HttpResponse => {
+  return {
+    statusCode: 403,
     body: error
   }
 }
