@@ -7,9 +7,9 @@ import {
   AuthenticationModel,
   Authentication
 } from './singup-controller-protocols'
-import { MissingParamError, ServerError } from '../../errors'
+import { EmailInUseError, MissingParamError, ServerError } from '../../errors'
 import { SingUpController } from './signup-controller'
-import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
+import { badRequest, forbiden, ok, serverError } from '../../helpers/http/http-helper'
 
 interface SutTypes {
   sut: SingUpController
@@ -141,5 +141,12 @@ describe('Sing up controller', () => {
     jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  test('should return 403 if AddAccount returns null', async () => {
+    const { sut, addAccountStub } = makeSut()
+    jest.spyOn(addAccountStub, 'add').mockReturnValueOnce(null)
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(forbiden(new EmailInUseError()))
   })
 })
