@@ -15,10 +15,12 @@ services:
     build: .
     image: clean-node-api
     restart: always
-    command: yarn start
+    command: yarn debug
     volumes: 
       - ./dist:/usr/app/dist
+      - ./package.json:/usr/app/package.json
     ports:
       - 3000:3000
+      - 9222:9222
     links: 
       - db
