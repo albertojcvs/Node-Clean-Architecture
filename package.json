@@ -34,9 +34,10 @@
   "author": "Alberto Jose <albertojcvs@gmail.com>",
   "scripts": {
     "start": "node dist/main/server.js",
-    "debug": "node --inspect=0.0.0.0:9222 --nolazy dist/main/server.js",
+    "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy dist/main/server.js",
     "build": "rimraf dist && tsc",
-    "up": "yarn build && docker-compose up",
+    "up": "yarn build && docker-compose up -d",
+    "down": "docker-compose down",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "yarn test -- -c jest-unit-config.js",
@@ -49,6 +50,7 @@
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "3.5.1",
+    "nodemon": "^2.0.15",
     "validator": "^13.7.0"
   },
   "engines": {
