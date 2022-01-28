@@ -33,7 +33,7 @@
   },
   "author": "Alberto Jose <albertojcvs@gmail.com>",
   "scripts": {
-    "start": "node src/main/server.js",
+    "start": "node dist/main/server.js",
     "build": "rimraf dist && tsc",
     "dev": "sucrase-node ./src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
