@@ -3,7 +3,7 @@ import { AccessDeniedError } from '../errors/access-denied-error'
 import { forbiden, ok, serverError } from '../helpers/http/http-helper'
 
 export class AuthMiddleware implements Middleware {
-  constructor (private readonly loadAccountByToken: LoadAccountByToken, private readonly role: string) {}
+  constructor (private readonly loadAccountByToken: LoadAccountByToken, private readonly role?: string) {}
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const accessToken = httpRequest.headers?.['x-access-token']
