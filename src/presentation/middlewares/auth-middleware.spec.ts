@@ -1,7 +1,7 @@
 import { AccountModel } from '../../domain/models/AccountModel'
 import { LoadAccountByToken } from '../../domain/usesCases/load-account-by-access-token'
 import { AccessDeniedError } from '../errors/access-denied-error'
-import { forbiden } from '../helpers/http/http-helper'
+import { forbiden, ok } from '../helpers/http/http-helper'
 import { HttpRequest } from '../protocols'
 import { AuthMiddleware } from './auth-middleware'
 
@@ -15,10 +15,9 @@ const makeFakeAccount = (): AccountModel => ({
 const makeLoadAccountBytToken = (): LoadAccountByToken => {
   class LoadAccountByTokenStub implements LoadAccountByToken {
     async load (token: string, role?: string): Promise<AccountModel> {
-      return await new Promise((resolve) => resolve(makeFakeAccount()))
+      return await new Promise(resolve => resolve(makeFakeAccount()))
     }
   }
-
   return new LoadAccountByTokenStub()
 }
 
@@ -30,7 +29,6 @@ interface SutTypes {
 const makeSut = (): SutTypes => {
   const loadAccountByTokenStub = makeLoadAccountBytToken()
   const sut = new AuthMiddleware(loadAccountByTokenStub)
-
   return {
     sut,
     loadAccountByTokenStub
@@ -42,6 +40,7 @@ const makeFakeRequest = (): HttpRequest => ({
     'x-access-token': 'any_token'
   }
 })
+
 describe('Auth Middleware', () => {
   test('Should return 403 if no x-access-token exists in headers', async () => {
     const { sut } = makeSut()
@@ -53,7 +52,6 @@ describe('Auth Middleware', () => {
     const { sut, loadAccountByTokenStub } = makeSut()
     const loadSpy = jest.spyOn(loadAccountByTokenStub, 'load')
     await sut.handle(makeFakeRequest())
-
     expect(loadSpy).toHaveBeenCalledWith('any_token')
   })
 
@@ -62,5 +60,11 @@ describe('Auth Middleware', () => {
     jest.spyOn(loadAccountByTokenStub, 'load').mockReturnValueOnce(new Promise(resolve => resolve(null)))
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(forbiden(new AccessDeniedError()))
+  })
+
+  test('Should return 200 if LoadAccountByToken returns an account', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(ok({ accountId: 'valid_id' }))
   })
 })
