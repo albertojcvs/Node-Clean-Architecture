@@ -12,22 +12,24 @@ const makeSut = (): JwtAdapter => {
 }
 
 describe('Jwt Adapter', () => {
-  test('Should call sing with correct values', async () => {
-    const sut = makeSut()
-    const signSpy = jest.spyOn(jwt, 'sign')
-    await sut.encrypt('any_id')
-    expect(signSpy).toHaveBeenCalledWith({ id: 'any_id' }, 'secret')
-  })
-  test('Should return a token on success', async () => {
-    const sut = new JwtAdapter('secret')
-    const token = await sut.encrypt('any_id')
-    expect(token).toBe('any_token')
-  })
+  describe('Jwt Adapter', () => {
+    test('Should call sing with correct values', async () => {
+      const sut = makeSut()
+      const signSpy = jest.spyOn(jwt, 'sign')
+      await sut.encrypt('any_id')
+      expect(signSpy).toHaveBeenCalledWith({ id: 'any_id' }, 'secret')
+    })
+    test('Should return a token on success', async () => {
+      const sut = new JwtAdapter('secret')
+      const token = await sut.encrypt('any_id')
+      expect(token).toBe('any_token')
+    })
 
-  test('Should throw of sing throws', async () => {
-    const sut = makeSut()
-    jest.spyOn(jwt, 'sign').mockImplementationOnce(() => { throw new Error() })
-    const promise = sut.encrypt('any_id')
-    await expect(promise).rejects.toThrow()
+    test('Should throw of sing throws', async () => {
+      const sut = makeSut()
+      jest.spyOn(jwt, 'sign').mockImplementationOnce(() => { throw new Error() })
+      const promise = sut.encrypt('any_id')
+      await expect(promise).rejects.toThrow()
+    })
   })
 })
