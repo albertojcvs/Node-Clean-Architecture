@@ -1,4 +1,4 @@
-import { SurveyModel } from '@/domain/models/SurveyModel'
+import { SurveyModel } from '@/domain/models/survey'
 import { LoadSurveysRepository } from '@/data/protocols/db/survey/load-surveys-repository'
 import { DbLoadSurveys } from './db-load-surveys'
 import MockDate from 'mockdate'
