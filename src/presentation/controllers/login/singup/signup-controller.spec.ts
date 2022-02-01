@@ -7,9 +7,9 @@ import {
   AuthenticationModel,
   Authentication
 } from './singup-controller-protocols'
-import { EmailInUseError, MissingParamError, ServerError } from '../../../errors'
+import { EmailInUseError, MissingParamError, ServerError } from '@/presentation/errors'
 import { SingUpController } from './signup-controller'
-import { badRequest, forbiden, ok, serverError } from '../../../helpers/http/http-helper'
+import { badRequest, forbiden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 
 interface SutTypes {
   sut: SingUpController

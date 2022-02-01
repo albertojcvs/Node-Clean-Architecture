@@ -6,8 +6,8 @@ import {
   Validation,
   Authentication
 } from './singup-controller-protocols'
-import { badRequest, forbiden, ok, serverError } from '../../../helpers/http/http-helper'
-import { EmailInUseError } from '../../../errors'
+import { badRequest, forbiden, ok, serverError } from '@/presentation/helpers/http/http-helper'
+import { EmailInUseError } from '@/presentation/errors'
 
 export class SingUpController implements Controller {
   constructor (
