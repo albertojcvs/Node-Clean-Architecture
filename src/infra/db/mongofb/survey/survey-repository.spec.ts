@@ -28,9 +28,11 @@ describe('Survey mongo repository', () => {
       answers: [
         { answer: 'any_answer', image: 'any_image' },
         { answer: 'other_answer' }
-      ]
+      ],
+      date: new Date()
     })
-    const survey = await surveyCollection.findOne({ question: 'any_question' })
+    const survey = await surveyCollection.findOne({ question: 'any_question' }
+    )
     expect(survey).toBeTruthy()
   })
 })
