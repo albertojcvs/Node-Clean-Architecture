@@ -59,4 +59,19 @@ describe('Survey routes', () => {
         .expect(204)
     })
   })
+
+  describe('GET /surveys ', () => {
+    test('Should return 403 on load surveys without a accessToken', async () => {
+      await request(app)
+        .get('/api/surveys')
+        .send({
+          question: 'any_questions',
+          answers: [
+            { image: 'http://teste.com', answer: 'answer 1' },
+            { answer: 'answer 2' }
+          ]
+        })
+        .expect(403)
+    })
+  })
 })
