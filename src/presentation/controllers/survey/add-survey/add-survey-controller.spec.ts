@@ -13,7 +13,7 @@ const makeFakeRequest = (): HttpRequest => ({
     date: new Date()
   }
 })
-interface SutTypes {
+type SutTypes = {
   sut: AddSurveyController
   validationStub: Validation
   addSurveyStub: AddSurvey
@@ -97,7 +97,7 @@ describe('AddSurvey Controller', () => {
   })
 
   test('Should return 204 on AddSurvey success', async () => {
-    const { sut, addSurveyStub } = makeSut()
+    const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
 
     expect(httpResponse).toEqual(noContent())

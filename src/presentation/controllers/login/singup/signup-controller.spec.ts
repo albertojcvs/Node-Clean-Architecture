@@ -11,7 +11,7 @@ import { EmailInUseError, MissingParamError, ServerError } from '@/presentation/
 import { SingUpController } from './signup-controller'
 import { badRequest, forbiden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 
-interface SutTypes {
+type SutTypes = {
   sut: SingUpController
   addAccountStub: AddAccount
   validationStub: Validation
@@ -67,13 +67,6 @@ const makeFakeRequest = (): HttpRequest => ({
     password: 'password',
     passwordConfirmation: 'password'
   }
-})
-
-const makeFakeAccount = (): AccountModel => ({
-  id: 'valid_id',
-  name: 'valid_name',
-  email: 'valid_email@mail.com',
-  password: 'valid_password'
 })
 
 describe('Sing up controller', () => {

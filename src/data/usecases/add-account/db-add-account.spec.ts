@@ -7,7 +7,7 @@ import {
 } from './db-add-account-protocols'
 import { DbAddAccount } from './db-add-account'
 
-interface SutTypes {
+type SutTypes = {
   sut: DbAddAccount
   hasherStub: Hasher
   addAccountRepositoryStub: AddAccountRepository
@@ -136,7 +136,7 @@ describe('DbAccount Usecase', () => {
   })
 
   test('Should return a account ion success', async () => {
-    const { sut, addAccountRepositoryStub } = makeSut()
+    const { sut } = makeSut()
     const account = await sut.add(makeFakeAccountData())
     expect(account).toEqual(makeFakeAccount())
   })
