@@ -47,4 +47,10 @@ describe('', () => {
     await sut.load('any_id')
     expect(loadByIdSpy).toHaveBeenCalledWith('any_id')
   })
+
+  test('Should return an survey on success', async () => {
+    const { sut } = makeSut()
+    const survey = await sut.load('any_id')
+    expect(survey).toEqual(makeFakeSurvey())
+  })
 })
