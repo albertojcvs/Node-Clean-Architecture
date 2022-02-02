@@ -6,6 +6,7 @@ import {
 import { HttpRequest } from '../../login/login/login-controller-protocols'
 import { SaveSurveyResultController } from './save-survey-result-controller'
 import MockDate from 'mockdate'
+import { serverError } from '@/presentation/helpers/http/http-helper'
 
 type SutTypes = {
   sut: SaveSurveyResultController
@@ -67,5 +68,11 @@ describe('SaveSurveyResultController', () => {
     const fakeSurveyResultData = makeFakeSurveyResultData()
     await sut.handle(makeFaKeRequest())
     expect(saveSpy).toHaveBeenCalledWith(fakeSurveyResultData)
+  })
+  test('Shoudl return 500 if SaveSurveyResult throws', async () => {
+    const { sut, saveSurveyResultStub } = makeSut()
+    jest.spyOn(saveSurveyResultStub, 'save').mockRejectedValueOnce(new Error())
+    const httpResponse = await sut.handle(makeFaKeRequest())
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 })
