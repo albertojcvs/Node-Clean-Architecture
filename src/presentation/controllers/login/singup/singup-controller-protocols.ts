@@ -1,5 +1,5 @@
 export * from '@/presentation/protocols'
-export * from '@/domain/usesCases/add-account'
+export * from '@/domain/usesCases/account/add-account'
 export * from '@/domain/models/account'
 export * from '@/presentation/protocols/validation'
-export * from '@/domain/usesCases/authenticantion'
+export * from '@/domain/usesCases/account/authenticantion'

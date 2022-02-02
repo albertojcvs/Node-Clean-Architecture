@@ -1,11 +1,7 @@
 import { DbSaveSurveyResult } from './db-save-survey-result'
-import {
-  SaveSurveyResultRepository,
-  SurveyResultModel,
-  SaveSurveyResultModel
-} from './db-save-survey-result-protocols'
 
 import MockDate from 'mockdate'
+import { SaveSurveyResultModel, SaveSurveyResultRepository, SurveyResultModel } from './db-save-survey-result-protocols'
 
 type SutTypes = {
   sut: DbSaveSurveyResult

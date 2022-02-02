@@ -1,4 +1,4 @@
-import { LoadAccountByToken } from '@/domain/usesCases/load-account-by-access-token'
+import { LoadAccountByToken } from '@/domain/usesCases/account/load-account-by-access-token'
 import { Decrypter } from '@/data/protocols/criptography/decrypter'
 import { LoadAccountByTokenRepository } from '@/data/protocols/db/account/load-account-by-token-repository'
 import { AccountModel } from '../add-account/db-add-account-protocols'

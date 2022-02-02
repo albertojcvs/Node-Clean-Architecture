@@ -1,4 +1,4 @@
-export * from '@/domain/usesCases/authenticantion'
+export * from '@/domain/usesCases/account/authenticantion'
 export * from '@/data/protocols/criptography/hash-compare'
 export * from '@/data/protocols/criptography/encrypter'
 export * from '@/data/protocols/db/account/update-access-token-repository'
