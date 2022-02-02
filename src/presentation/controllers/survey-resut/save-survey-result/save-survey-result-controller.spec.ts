@@ -96,7 +96,7 @@ describe('SaveSurveyResultController', () => {
     expect(loadSpy).toHaveBeenCalledWith('any_survey_id')
   })
 
-  test('Shoudl call LoadSurveyById with correct values', async () => {
+  test('Shoudl return 403 if LoadSurveyById returns null', async () => {
     const { sut, loadSurveyByIdStub } = makeSut()
     jest.spyOn(loadSurveyByIdStub, 'load').mockResolvedValueOnce(null)
     const httpResponse = await sut.handle(makeFaKeRequest())
@@ -109,6 +109,13 @@ describe('SaveSurveyResultController', () => {
     const fakeSurveyResultData = makeFakeSurveyResultData()
     await sut.handle(makeFaKeRequest())
     expect(saveSpy).toHaveBeenCalledWith(fakeSurveyResultData)
+  })
+
+  test('Shoudl return 500 if LoadSurveyById throws', async () => {
+    const { sut, loadSurveyByIdStub } = makeSut()
+    jest.spyOn(loadSurveyByIdStub, 'load').mockRejectedValueOnce(new Error())
+    const httpResponse = await sut.handle(makeFaKeRequest())
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 
   test('Shoudl return 500 if SaveSurveyResult throws', async () => {
