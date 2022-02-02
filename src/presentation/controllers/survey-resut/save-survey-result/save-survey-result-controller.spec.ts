@@ -7,8 +7,9 @@ import {
   SurveyResultModel
 } from './save-survey-result-controller-protocols'
 import { SaveSurveyResultController } from './save-survey-result-controller'
-import { serverError } from '@/presentation/helpers/http/http-helper'
+import { forbiden, serverError } from '@/presentation/helpers/http/http-helper'
 import MockDate from 'mockdate'
+import { InvalidParamError } from '@/presentation/errors'
 
 type SutTypes = {
   sut: SaveSurveyResultController
@@ -94,6 +95,14 @@ describe('SaveSurveyResultController', () => {
     await sut.handle(makeFaKeRequest())
     expect(loadSpy).toHaveBeenCalledWith('any_survey_id')
   })
+
+  test('Shoudl call LoadSurveyById with correct values', async () => {
+    const { sut, loadSurveyByIdStub } = makeSut()
+    jest.spyOn(loadSurveyByIdStub, 'load').mockResolvedValueOnce(null)
+    const httpResponse = await sut.handle(makeFaKeRequest())
+    expect(httpResponse).toEqual(forbiden(new InvalidParamError('surveyId')))
+  })
+
   test('Shoudl call SaveSurveyResult with correct values', async () => {
     const { sut, saveSurveyResultStub } = makeSut()
     const saveSpy = jest.spyOn(saveSurveyResultStub, 'save')
@@ -101,6 +110,7 @@ describe('SaveSurveyResultController', () => {
     await sut.handle(makeFaKeRequest())
     expect(saveSpy).toHaveBeenCalledWith(fakeSurveyResultData)
   })
+
   test('Shoudl return 500 if SaveSurveyResult throws', async () => {
     const { sut, saveSurveyResultStub } = makeSut()
     jest.spyOn(saveSurveyResultStub, 'save').mockRejectedValueOnce(new Error())
