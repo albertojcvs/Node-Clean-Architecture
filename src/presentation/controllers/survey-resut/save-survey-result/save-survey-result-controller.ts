@@ -1,16 +1,13 @@
-import { SaveSurveyResult } from '@/domain/usesCases/survey-result/save-survey-result'
+import { Controller, HttpRequest, HttpResponse, LoadSurveyById, SaveSurveyResult } from './save-survey-result-controller-protocols'
 import { serverError } from '@/presentation/helpers/http/http-helper'
-import {
-  Controller,
-  HttpRequest,
-  HttpResponse
-} from '../../login/login/login-controller-protocols'
 
 export class SaveSurveyResultController implements Controller {
-  constructor (private readonly saveSurveyResult: SaveSurveyResult) {}
+  constructor (private readonly loadSurveyById: LoadSurveyById, private readonly saveSurveyResult: SaveSurveyResult) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
+      const { surveyId } = httpRequest.body
+      await this.loadSurveyById.load(surveyId)
       await this.saveSurveyResult.save(httpRequest.body)
       return null
     } catch (error) {
