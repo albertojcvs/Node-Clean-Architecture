@@ -73,9 +73,11 @@ const makeFakeSurveyResult = (): SurveyResultModel => ({
 const makeFaKeRequest = (): HttpRequest => ({
   body: {
     accountId: 'any_account_id',
-    surveyId: 'any_survey_id',
     answer: 'any',
     date: new Date()
+  },
+  params: {
+    surveyId: 'any_survey_id'
   }
 })
 describe('SaveSurveyResultController', () => {

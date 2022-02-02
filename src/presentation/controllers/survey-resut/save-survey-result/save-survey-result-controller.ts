@@ -6,9 +6,15 @@ export class SaveSurveyResultController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const { surveyId } = httpRequest.body
+      const { surveyId } = httpRequest.params
+      const { accountId, date, answer } = httpRequest.body
       await this.loadSurveyById.load(surveyId)
-      await this.saveSurveyResult.save(httpRequest.body)
+      await this.saveSurveyResult.save({
+        surveyId,
+        accountId,
+        answer,
+        date
+      })
       return null
     } catch (error) {
       return serverError(error)
