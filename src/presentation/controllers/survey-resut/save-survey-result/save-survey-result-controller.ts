@@ -1,11 +1,20 @@
 import { SaveSurveyResult } from '@/domain/usesCases/survey-result/save-survey-result'
-import { Controller, HttpRequest, HttpResponse } from '../../login/login/login-controller-protocols'
+import { serverError } from '@/presentation/helpers/http/http-helper'
+import {
+  Controller,
+  HttpRequest,
+  HttpResponse
+} from '../../login/login/login-controller-protocols'
 
 export class SaveSurveyResultController implements Controller {
   constructor (private readonly saveSurveyResult: SaveSurveyResult) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    await this.saveSurveyResult.save(httpRequest.body)
-    return null
+    try {
+      await this.saveSurveyResult.save(httpRequest.body)
+      return null
+    } catch (error) {
+      return serverError(error)
+    }
   }
 }
