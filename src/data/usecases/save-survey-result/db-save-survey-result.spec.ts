@@ -40,7 +40,7 @@ const makeFakeSurveyResult = (): SurveyResultModel => ({
 
 const makeFakeSurveyResultData = (): SaveSurveyResultModel => ({
   accountId: 'any',
-  suerveyId: 'any',
+  surveyId: 'any',
   answer: 'any',
   date: new Date()
 })
