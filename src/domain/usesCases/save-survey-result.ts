@@ -1,7 +1,7 @@
 import { SurveyResultModel } from '../models/survey-result'
 
 export interface SaveSurveyResultModel{
-  suerveyId: string
+  surveyId: string
   accountId: string
   answer: string
   date: Date
