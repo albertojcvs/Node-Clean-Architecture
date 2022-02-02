@@ -1,23 +1,31 @@
-import { SurveyResultModel } from '@/domain/models/survey-result'
 import {
+  HttpRequest,
+  LoadSurveyById,
   SaveSurveyResult,
-  SaveSurveyResultModel
-} from '@/domain/usesCases/survey-result/save-survey-result'
-import { HttpRequest } from '../../login/login/login-controller-protocols'
+  SaveSurveyResultModel,
+  SurveyModel,
+  SurveyResultModel
+} from './save-survey-result-controller-protocols'
 import { SaveSurveyResultController } from './save-survey-result-controller'
-import MockDate from 'mockdate'
 import { serverError } from '@/presentation/helpers/http/http-helper'
+import MockDate from 'mockdate'
 
 type SutTypes = {
   sut: SaveSurveyResultController
+  loadSurveyByIdStub: LoadSurveyById
   saveSurveyResultStub: SaveSurveyResult
 }
 
 const makeSut = (): SutTypes => {
+  const loadSurveyByIdStub = makeLoadSurveyById()
   const saveSurveyResultStub = makeSaveSurveyResult()
-  const sut = new SaveSurveyResultController(saveSurveyResultStub)
+  const sut = new SaveSurveyResultController(
+    loadSurveyByIdStub,
+    saveSurveyResultStub
+  )
   return {
     sut,
+    loadSurveyByIdStub,
     saveSurveyResultStub
   }
 }
@@ -31,10 +39,26 @@ const makeSaveSurveyResult = (): SaveSurveyResult => {
   return new SaveSurveyResultStub()
 }
 
+const makeLoadSurveyById = (): LoadSurveyById => {
+  class LoadSurveyByIdStub implements LoadSurveyById {
+    async load (id: string): Promise<SurveyModel> {
+      return await new Promise((resolve) => resolve(makeFakeSurvey()))
+    }
+  }
+  return new LoadSurveyByIdStub()
+}
+
 const makeFakeSurveyResultData = (): SaveSurveyResultModel => ({
-  accountId: 'any',
-  surveyId: 'any',
+  accountId: 'any_account_id',
+  surveyId: 'any_survey_id',
   answer: 'any',
+  date: new Date()
+})
+
+const makeFakeSurvey = (): SurveyModel => ({
+  id: 'any_id',
+  question: 'any_question',
+  answers: [{ answer: 'any' }],
   date: new Date()
 })
 
@@ -48,8 +72,8 @@ const makeFakeSurveyResult = (): SurveyResultModel => ({
 
 const makeFaKeRequest = (): HttpRequest => ({
   body: {
-    accountId: 'any',
-    surveyId: 'any',
+    accountId: 'any_account_id',
+    surveyId: 'any_survey_id',
     answer: 'any',
     date: new Date()
   }
@@ -61,6 +85,12 @@ describe('SaveSurveyResultController', () => {
 
   afterAll(() => {
     MockDate.reset()
+  })
+  test('Shoudl call LoadSurveyById with correct values', async () => {
+    const { sut, loadSurveyByIdStub } = makeSut()
+    const loadSpy = jest.spyOn(loadSurveyByIdStub, 'load')
+    await sut.handle(makeFaKeRequest())
+    expect(loadSpy).toHaveBeenCalledWith('any_survey_id')
   })
   test('Shoudl call SaveSurveyResult with correct values', async () => {
     const { sut, saveSurveyResultStub } = makeSut()
