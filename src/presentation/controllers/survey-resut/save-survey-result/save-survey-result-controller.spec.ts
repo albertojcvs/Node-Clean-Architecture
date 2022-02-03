@@ -95,7 +95,11 @@ describe('SaveSurveyResultController', () => {
     expect(loadSpy).toHaveBeenCalledWith('any_survey_id')
   })
 
+<<<<<<< HEAD
   test('Shoudl return 403 if LoadSurveyById returns null', async () => {
+=======
+  test('Shoudl return if LoadSurveyById returns null', async () => {
+>>>>>>> db9b2f5edf73221920ff96fc57c335d89f4aa9a7
     const { sut, loadSurveyByIdStub } = makeSut()
     jest.spyOn(loadSurveyByIdStub, 'load').mockResolvedValueOnce(null)
     const httpResponse = await sut.handle(makeFaKeRequest())
