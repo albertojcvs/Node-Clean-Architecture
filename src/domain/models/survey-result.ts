@@ -1,6 +1,6 @@
 export interface SurveyResultModel {
   surveyId: string
-  accountId: string
+  question: string
   answers: SurveyResultAnserwModel[]
   date: Date
 }

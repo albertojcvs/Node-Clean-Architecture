@@ -4,7 +4,12 @@ import { AddSurveyModel } from '@/domain/usesCases/survey/add-survey'
 export const mockSurvey = (): SurveyModel => ({
   id: 'any_id',
   question: 'any_question',
-  answers: [{ answer: 'any_answer_1' }, { answer: 'any_answer_2' }],
+  answers: [
+    { answer: 'any_answer' },
+    {
+      answer: 'other_answer'
+    }
+  ],
   date: new Date()
 })
 

@@ -32,7 +32,7 @@ const makeSut = (): SutTypes => {
 
 const mockRequest = (): HttpRequest => ({
   body: {
-    answer: 'any_answer_1'
+    answer: 'any_answer'
   },
   params: {
     surveyId: 'any_survey_id'
