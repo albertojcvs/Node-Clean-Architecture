@@ -1,4 +1,4 @@
-import { SurveyResultModel } from '../../models/survey-result'
+import { SurveyResultModel } from '@/domain/models/survey-result'
 
 export interface SaveSurveyResultModel{
   surveyId: string
