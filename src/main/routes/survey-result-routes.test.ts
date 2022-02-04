@@ -47,7 +47,6 @@ describe('Survey Results routes', () => {
 
     test('Should return 200 on save survey with accessToken', async () => {
       const accessToken = await makeAccessToken()
-      console.log(accessToken)
       const res = await surveyCollection.insertOne({
         question: 'Question',
         answers: [
@@ -57,7 +56,6 @@ describe('Survey Results routes', () => {
         date: new Date()
       })
       const id: string = res.ops[0]._id
-      console.log(id)
       await request(app)
         .put(`/api/surveys/${id}/results`)
         .set('x-access-token', accessToken)
