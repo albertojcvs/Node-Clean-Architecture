@@ -49,10 +49,7 @@ describe('Survey Results routes', () => {
       const accessToken = await makeAccessToken()
       const res = await surveyCollection.insertOne({
         question: 'Question',
-        answers: [
-          { answer: 'Answer 1' },
-          { answer: 'Answer 2' }
-        ],
+        answers: [{ answer: 'Answer 1' }, { answer: 'Answer 2' }],
         date: new Date()
       })
       const id: string = res.ops[0]._id
@@ -68,9 +65,21 @@ describe('Survey Results routes', () => {
 
   describe('GET /surveys/:surveyId/results ', () => {
     test('Should return 403 on add survey without a accessToken', async () => {
+      await request(app).get('/api/surveys/any/results').expect(403)
+    })
+    test('Should return 200 on load survey with accessToken', async () => {
+      const accessToken = await makeAccessToken()
+      const res = await surveyCollection.insertOne({
+        question: 'Question',
+        answers: [{ answer: 'Answer 1' }, { answer: 'Answer 2' }],
+        date: new Date()
+      })
+      const id: string = res.ops[0]._id
+
       await request(app)
-        .get('/api/surveys/any/results')
-        .expect(403)
+        .get(`/api/surveys/${id}/results`)
+        .set('x-access-token', accessToken)
+        .expect(200)
     })
   })
 })
