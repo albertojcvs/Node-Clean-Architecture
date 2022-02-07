@@ -17,7 +17,7 @@ const makeSut = (): SutTypes => {
   }
 }
 const mockRequest = (): HttpRequest => ({
-  body: {
+  params: {
     surveyId: 'any_id'
   }
 })
@@ -35,6 +35,8 @@ describe('LoadSurveyResult Controller', () => {
     const { sut, loadSurveyByIdStub } = makeSut()
     jest.spyOn(loadSurveyByIdStub, 'load').mockRejectedValueOnce(new Error())
     const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(serverError(new Error()))
+  })
 
     await expect(httpResponse).toEqual(serverError(new Error()))
   })
