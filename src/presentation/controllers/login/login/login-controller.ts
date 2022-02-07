@@ -10,9 +10,9 @@ export class LoginController implements Controller {
         return badRequest(error)
       }
       const { email, password } = httpRequest.body
-      const token = await this.authetication.auth({ email, password })
-      if (!token) return unauthorized()
-      return ok({ token })
+      const authData = await this.authetication.auth({ email, password })
+      if (!authData) return unauthorized()
+      return ok(authData)
     } catch (error) {
       return serverError(error)
     }
