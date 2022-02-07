@@ -2,6 +2,7 @@ import { ok, serverError, unauthorized } from '../../../helpers/http/http-helper
 import { HttpRequest, Authentication, Validation } from './login-controller-protocols'
 import { LoginController } from './login-controller'
 import { mockAuthentication, mockValidation } from '@/presentation/tests'
+import { mockAuthenticationModel } from '@/domain/tests'
 
 type SutTypes = {
   sut: LoginController
@@ -56,6 +57,6 @@ describe('Login controller', () => {
     const { sut } = makeSut()
 
     const httpResponse = await sut.handle(mockFakeRequest())
-    expect(httpResponse).toEqual(ok({ token: 'any_token' }))
+    expect(httpResponse).toEqual(ok(mockAuthenticationModel()))
   })
 })

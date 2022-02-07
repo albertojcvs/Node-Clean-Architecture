@@ -8,6 +8,7 @@ import { EmailInUseError, MissingParamError, ServerError } from '@/presentation/
 import { SingUpController } from './signup-controller'
 import { badRequest, forbiden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { mockAddAccount, mockAuthentication, mockValidation } from '@/presentation/tests'
+import { mockAuthenticationModel } from '@/domain/tests'
 
 type SutTypes = {
   sut: SingUpController
@@ -57,7 +58,7 @@ describe('Sing up controller', () => {
   test('should return 200 if valid data is provided', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }))
+    expect(httpResponse).toEqual(ok(mockAuthenticationModel()))
   })
 
   test('should call Validation with correct values', async () => {
